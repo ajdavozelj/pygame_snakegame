@@ -47,104 +47,56 @@ y = 200
 
 #def hranjenje():
 smerN = "D"
-polozajX = None
-polozajY = None
 barva = (200,0,233)
-hitrost = 1
+hitrost = 15
 exit = False
 hrana = [120,87]
-kaca = [[250, 250, "D"], [230,250, "D"], [210,250, "D"]]
-smeri = ["D", "D", "D"]
+kaca = [[250, 250], [230,250], [210,250]]
+
 while not exit:
-    pygame.time.wait(5)
+    pygame.time.wait(50)
     canvas.fill((0,0,0))
-
-    """
-    if smer == "D":
-        for j in kaca:
-            smeri.append("D")
-            smeri.pop()
-
-    elif smer == "A":
-        for j in kaca:
-            smeri.append("A")
-            smeri.pop()
-            j[0] -= hitrost
-    elif smer == "W":
-        for j in kaca:
-            j[1] -= hitrost
-            smeri.append("W")
-            smeri.pop()
-    elif smer == "S":
-        for j in kaca:
-            smeri.append("S")
-            smeri.pop()
-            j[1] += hitrost
-    """
 
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
+    if keys[pygame.K_w] and smerN != "S":
         smerN ="W"
-        polozajY = kaca[0][1]
-
-        smeri.append("W")
-        smeri.pop(0)
-    if keys[pygame.K_s]:
-        smeri.append("S")
-        smeri.pop(0)
+    if keys[pygame.K_s]and smerN != "W":
         smerN = "S"
-        polozajY = kaca[0][1]
-        print(kaca[0],[0])
-    if keys[pygame.K_d]:
-        smeri.append("D")
-        smeri.pop(0)
+    if keys[pygame.K_d] and smerN != "A":
         smerN = "D"
-        polozajX = kaca[0][0]
-    if keys[pygame.K_a]:
+    if keys[pygame.K_a] and smerN != "D":
         smerN = "A"
-        polozajX = kaca[0][0]
 
-        smeri.pop(0)
-        smeri.append("A")
-
-    for i in range(len(kaca)):
-        x = kaca[i][0]
-        y = kaca[i][1]
-        smerk = kaca[i][2]
-        print(smerN, polozajX)
-        if smerN == "D" and y == polozajY:
-            smerk ="D"
-
-        if smerN == "S" and x == polozajX:
-            smerk = "S"
-
-        if smerN == "A" and y == polozajX:
-            smerk = "A"
-
-        if smerN == "W" and x == polozajX:
-            smerk = "W"
+    for i in range(len(kaca)-1):
+        kaca[-1-i][0] =  kaca [-2-i][0]
+        kaca[-1-i][1] = kaca[-2-i][1]
 
 
-        if smerk == "D":
-            x += hitrost
-        if smerk == "A":
-            x -= hitrost
-        if smerk == "W":
-            y -= hitrost
-        if smerk == "S":
-            y += hitrost
+    if smerN == "D":
+        kaca[0][0] += hitrost
+    if smerN == "A":
+        kaca[0][0] -= hitrost
+    if smerN == "W":
+        kaca[0][1] -= hitrost
+    if smerN == "S":
+        kaca[0][1] += hitrost
 
 
-        kaca[i] = [x,y,smerk]
-        pygame.draw.rect(canvas, barva,pygame.Rect(x,y,15, 15))
-
-        if x > 585 or x<0 or y>585 or y<0:
-            exit = True
     print(kaca)
+
+    for j in kaca:
+        pygame.draw.rect(canvas, barva, pygame.Rect(j[0], j[1], 15, 15))
+
+        if j[0] > 585 or j[0] < 0 or j[1] > 585 or j[1] < 0:
+            exit = True
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit = True
 
     pygame.draw.rect(canvas, (50,250,50), pygame.Rect(hrana[0],hrana[1], 10, 10))
     pygame.display.update()
+
+
+
