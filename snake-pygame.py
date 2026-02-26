@@ -85,14 +85,14 @@ while not exit:
 
     print(kaca)
 
-    hrana = pygame.Rect(hranakoordinate[0], hranakoordinate[1], 20, 20)
-    pygame.draw.rect(canvas, (50, 250, 50),hrana )
-
     for j in kaca:
         kacica = pygame.Rect(j[0], j[1], 15, 15)
         pygame.draw.rect(canvas, barva, kacica)
         if j[0] > 585 or j[0] < 0 or j[1] > 585 or j[1] < 0:
             exit = True
+
+    hrana = pygame.Rect(hranakoordinate[0], hranakoordinate[1], 20, 20)
+    pygame.draw.rect(canvas, (50, 250, 50),hrana )
 
     glava = pygame.Rect(kaca[0][0], kaca[0][1], 15, 15)
     if glava.colliderect(hrana):
