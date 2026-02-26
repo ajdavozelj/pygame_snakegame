@@ -1,4 +1,5 @@
 #okiren plan
+import random
 
 #I. Naredi ogrodje -> while zanka, canvas, eventi za exit itd
 
@@ -50,11 +51,11 @@ smerN = "D"
 barva = (200,0,233)
 hitrost = 15
 exit = False
-hrana = [120,87]
-kaca = [[250, 250], [230,250], [210,250]]
+hranakoordinate = [120,87]
+kaca = [[250, 250], [230,250]]
 
 while not exit:
-    pygame.time.wait(50)
+    pygame.time.wait(70)
     canvas.fill((0,0,0))
 
 
@@ -82,20 +83,30 @@ while not exit:
     if smerN == "S":
         kaca[0][1] += hitrost
 
-
     print(kaca)
 
-    for j in kaca:
-        pygame.draw.rect(canvas, barva, pygame.Rect(j[0], j[1], 15, 15))
+    hrana = pygame.Rect(hranakoordinate[0], hranakoordinate[1], 20, 20)
+    pygame.draw.rect(canvas, (50, 250, 50),hrana )
 
+    for j in kaca:
+        kacica = pygame.Rect(j[0], j[1], 15, 15)
+        pygame.draw.rect(canvas, barva, kacica)
         if j[0] > 585 or j[0] < 0 or j[1] > 585 or j[1] < 0:
             exit = True
+
+    glava = pygame.Rect(kaca[0][0], kaca[0][1], 15, 15)
+    if glava.colliderect(hrana):
+        hranakoordinate[0] = random.randint(50,550)
+        hranakoordinate[1] = random.randint(50, 550)
+
+        kaca.append([1,1])
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit = True
 
-    pygame.draw.rect(canvas, (50,250,50), pygame.Rect(hrana[0],hrana[1], 10, 10))
+
     pygame.display.update()
 
 
