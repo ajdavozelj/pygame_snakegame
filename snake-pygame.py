@@ -48,18 +48,21 @@ y = 200
 
 #def hranjenje():
 smerN = "D"
+smerD = "left"
 barva = (200,0,233)
 hitrost = 15
 exit = False
 hranakoordinate = [120,87]
 kaca = [[250, 250], [230,250]]
+kacaD = [[80,100], [100,100]]
 
 while not exit:
     pygame.time.wait(70)
     canvas.fill((0,0,0))
 
-
     keys = pygame.key.get_pressed()
+    #kaca ena
+
     if keys[pygame.K_w] and smerN != "S":
         smerN ="W"
     if keys[pygame.K_s]and smerN != "W":
@@ -73,7 +76,6 @@ while not exit:
         kaca[-1-i][0] =  kaca [-2-i][0]
         kaca[-1-i][1] = kaca[-2-i][1]
 
-
     if smerN == "D":
         kaca[0][0] += hitrost
     if smerN == "A":
@@ -83,16 +85,47 @@ while not exit:
     if smerN == "S":
         kaca[0][1] += hitrost
 
-    print(kaca)
+    #kaca Dve
 
-    hrana = pygame.Rect(hranakoordinate[0], hranakoordinate[1], 20, 20)
-    pygame.draw.rect(canvas, (50, 250, 50),hrana )
+    if keys[pygame.K_UP] and smerD != "down":
+        smerD ="up"
+    if keys[pygame.K_DOWN]and smerD != "up":
+        smerD = "down"
+    if keys[pygame.K_LEFT] and smerD != "right":
+        smerD = "left"
+    if keys[pygame.K_RIGHT] and smerD != "left":
+        smerD = "right"
 
+    for k in range(len(kacaD) - 1):
+        kacaD[-1 - k][0] = kacaD[-2 - k][0]
+        kacaD[-1 - k][1] = kacaD[-2 - k][1]
+
+    if smerD == "right":
+        kaca[0][0] += hitrost
+    if smerD == "left":
+        kaca[0][0] -= hitrost
+    if smerD == "up":
+        kaca[0][1] -= hitrost
+    if smerD == "down":
+        kaca[0][1] += hitrost
+
+    #print(kaca)
+    #izrisovanje kac
     for j in kaca:
         kacica = pygame.Rect(j[0], j[1], 15, 15)
         pygame.draw.rect(canvas, barva, kacica)
         if j[0] > 585 or j[0] < 0 or j[1] > 585 or j[1] < 0:
             exit = True
+
+    for l in kacaD:
+        kacicaD = pygame.Rect(l[0], l[1], 15, 15)
+        pygame.draw.rect(canvas, barva, kacicaD)
+        if l[0] > 585 or l[0] < 0 or l[1] > 585 or l[1] < 0:
+            exit = True
+
+
+    hrana = pygame.Rect(hranakoordinate[0], hranakoordinate[1], 20, 20)
+    pygame.draw.rect(canvas, (50, 250, 50),hrana)
 
     glava = pygame.Rect(kaca[0][0], kaca[0][1], 15, 15)
     if glava.colliderect(hrana):
