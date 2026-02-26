@@ -60,9 +60,8 @@ while not exit:
     pygame.time.wait(70)
     canvas.fill((0,0,0))
 
-    keys = pygame.key.get_pressed()
     #kaca ena
-
+    keys = pygame.key.get_pressed()
     if keys[pygame.K_w] and smerN != "S":
         smerN ="W"
     if keys[pygame.K_s]and smerN != "W":
@@ -72,8 +71,19 @@ while not exit:
     if keys[pygame.K_a] and smerN != "D":
         smerN = "A"
 
+
+    if keys[pygame.K_UP] and smerD != "down":
+        smerD ="up"
+    if keys[pygame.K_DOWN]and smerD != "up":
+        smerD = "down"
+    if keys[pygame.K_LEFT] and smerD != "right":
+        smerD = "left"
+    if keys[pygame.K_RIGHT] and smerD != "left":
+        smerD = "right"
+
+
     for i in range(len(kaca)-1):
-        kaca[-1-i][0] =  kaca [-2-i][0]
+        kaca[-1-i][0] =  kaca[-2-i][0]
         kaca[-1-i][1] = kaca[-2-i][1]
 
     if smerN == "D":
@@ -87,29 +97,20 @@ while not exit:
 
     #kaca Dve
 
-    if keys[pygame.K_UP] and smerD != "down":
-        smerD ="up"
-    if keys[pygame.K_DOWN]and smerD != "up":
-        smerD = "down"
-    if keys[pygame.K_LEFT] and smerD != "right":
-        smerD = "left"
-    if keys[pygame.K_RIGHT] and smerD != "left":
-        smerD = "right"
-
     for k in range(len(kacaD) - 1):
         kacaD[-1 - k][0] = kacaD[-2 - k][0]
         kacaD[-1 - k][1] = kacaD[-2 - k][1]
 
     if smerD == "right":
         kaca[0][0] += hitrost
-    if smerD == "left":
+    elif smerD == "left":
         kaca[0][0] -= hitrost
-    if smerD == "up":
+    elif smerD == "up":
         kaca[0][1] -= hitrost
-    if smerD == "down":
+    elif smerD == "down":
         kaca[0][1] += hitrost
 
-    #print(kaca)
+    print(kaca)
     #izrisovanje kac
     for j in kaca:
         kacica = pygame.Rect(j[0], j[1], 15, 15)
