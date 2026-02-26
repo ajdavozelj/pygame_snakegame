@@ -57,9 +57,11 @@ kaca = [[250, 250], [230,250]]
 while not exit:
     pygame.time.wait(70)
     canvas.fill((0,0,0))
-
-
     keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE]:
+        barva = (random.randint(0,255), random.randint(0,255), random.randint(0,255)  )
+        print(barva)
+
     if keys[pygame.K_w] and smerN != "S":
         smerN ="W"
     if keys[pygame.K_s]and smerN != "W":
