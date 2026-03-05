@@ -40,18 +40,18 @@ import pygame
 
 
 pygame.init()
-canvas = pygame.display.set_mode((600,600))
+canvas = pygame.display.set_mode((700,700))
 pygame.display.set_caption("Snake game")
 
 x = 200
 y = 200
 
 #def hranjenje():
-smerN = "A"
+smerN = "D"
 smerD = "right"
 barvaE = (200,0,233)
 barvaD = (0,230,230)
-hitrost = 10
+hitrost = 15
 exit = False
 hranakoordinate = [120,87]
 kaca = [[250, 400], [235,400]]
@@ -87,37 +87,36 @@ while not exit:
     if keys[pygame.K_RIGHT] and smerD != "left":
         smerD = "right"
 
-
+    """
     for i in range(len(kaca)-1):
         kaca[-1-i][0] =  kaca[-2-i][0]
         kaca[-1-i][1] = kaca[-2-i][1]
-
+    """
     if smerN == "D":
-        print(hitrost)
-        kaca[0][0] += hitrost
+        kaca.insert(0, ([(kaca[0][0] + hitrost), kaca[0][1]]))
     if smerN == "A":
-        kaca[0][0] -= hitrost
+        kaca.insert(0, ([(kaca[0][0] - hitrost), kaca[0][1]]))
     if smerN == "W":
-        kaca[0][1] -= hitrost
+        kaca.insert(0, ([kaca[0][0] , (kaca[0][1] - hitrost)]))
     if smerN == "S":
-        kaca[0][1] += hitrost
+        kaca.insert(0, ([kaca[0][0] , (kaca[0][1] + hitrost)]))
 
     #kaca Dve
-
+    """
     for k in range(len(kacaD) - 1):
         kacaD[-1 - k][0] = kacaD[-2 - k][0]
         kacaD[-1 - k][1] = kacaD[-2 - k][1]
-
+    """
     if smerD == "right":
-        kacaD[0][0] += hitrost
+        kacaD.insert(0, ([(kacaD[0][0] + hitrost), kacaD[0][1]]))
     elif smerD == "left":
-        kacaD[0][0] -= hitrost
+        kacaD.insert(0, ([(kacaD[0][0] - hitrost), kacaD[0][1]]))
     elif smerD == "up":
-        kacaD[0][1] -= hitrost
+        kacaD.insert(0, ([kacaD[0][0] , (kacaD[0][1] - hitrost)]))
     elif smerD == "down":
-        kacaD[0][1] += hitrost
+        kacaD.insert(0, ([kacaD[0][0] , (kacaD[0][1] + hitrost)]))
 
-    kaca[0][0] +=1
+    #kaca[0][0] +=1
     #izrisovanje kac
     glavaE = pygame.Rect(kaca[0][0], kaca[0][1], 15, 15)
     glavaD = pygame.Rect(kacaD[0][0], kacaD[0][1], 15, 15)
@@ -128,31 +127,39 @@ while not exit:
         pygame.draw.rect(canvas, barvaE, kacica)
         if glavaD.colliderect(kacica):
             exit = True
-        if j[0] > 585 or j[0] < 0 or j[1] > 585 or j[1] < 0:
+        if glavaE.colliderect(kacica) and j != kaca[0]:
+            print(kaca)
+            exit = True
+        if j[0] > 685 or j[0] < 0 or j[1] > 685 or j[1] < 0:
             exit = True
 
-
+    print(kacaD)
     for l in kacaD:
+        print(l)
         kacicaD = pygame.Rect(l[0], l[1], 15, 15)
         pygame.draw.rect(canvas, barvaD, kacicaD)
         if glavaE.colliderect(kacicaD):
             exit = True
-        if l[0] > 585 or l[0] < 0 or l[1] > 585 or l[1] < 0:
+        if glavaD.colliderect(kacicaD) and l != kacaD[0]:
+            print("-----------------")
+            exit = True
+        if l[0] > 685 or l[0] < 0 or l[1] > 685 or l[1] < 0:
             exit = True
 
-
+    """
     hrana = pygame.Rect(hranakoordinate[0], hranakoordinate[1], 15, 15)
     pygame.draw.rect(canvas, (50, 250, 50),hrana)
 
     if glavaE.colliderect(hrana):
+        hranakoordinate[0] = random.randint(50,650)
+        hranakoordinate[1] = random.randint(50, 650)
+        kaca.append([1,1])
 
-        hranakoordinate[0] = random.randint(50,550)
-        hranakoordinate[1] = random.randint(50, 550)
-        kaca.append([1, 1])
     elif glavaD.colliderect(hrana):
-        hranakoordinate[0] = random.randint(50,550)
-        hranakoordinate[1] = random.randint(50, 550)
+        hranakoordinate[0] = random.randint(50,650)
+        hranakoordinate[1] = random.randint(50, 650)
         kacaD.append([1,1])
+    """
 
 
     for event in pygame.event.get():
