@@ -47,18 +47,18 @@ x = 200
 y = 200
 
 #def hranjenje():
-smerN = "D"
-smerD = "left"
+smerN = "A"
+smerD = "right"
 barvaE = (200,0,233)
 barvaD = (0,230,230)
-hitrost = 15
+hitrost = 10
 exit = False
 hranakoordinate = [120,87]
-kaca = [[250, 400], [230,400]]
-kacaD = [[250,200], [260,200]]
+kaca = [[250, 400], [235,400]]
+kacaD = [[250,200], [265,200]]
 
 while not exit:
-    pygame.time.wait(70)
+    pygame.time.wait(75)
     canvas.fill((0,0,0))
 
     #kaca ena
@@ -135,7 +135,7 @@ while not exit:
             exit = True
 
 
-    hrana = pygame.Rect(hranakoordinate[0], hranakoordinate[1], 20, 20)
+    hrana = pygame.Rect(hranakoordinate[0], hranakoordinate[1], 15, 15)
     pygame.draw.rect(canvas, (50, 250, 50),hrana)
 
     if glavaE.colliderect(hrana):
